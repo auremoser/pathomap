@@ -11,15 +11,16 @@ var LAT_LON;
 var HEADERS = 'Library_Name_s lat_lon_s env_biome_s env_feature_s'.split(' ');
 var indexes = [];
 
-// We create a write stream, we will append the
-// transformed content to this file, line by line.
+// Create a write stream, append the
+// transformed content to this file
+// line by line.
 var outStream = fs.createWriteStream(OUTPUT_FILE);
 
 readline(INPUT_FILE)
 .on('header', function transformHeader(line){ // this handler only gets called for the first line
     var out = [];
     // Make an array with our line content using
-    // the pipe symbol as breaking point
+    // the pipe as <br> point
     var chunks = line.split(NEEDLE);
 
     chunks.forEach(function(chunk, i){

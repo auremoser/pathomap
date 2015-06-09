@@ -9,3 +9,5 @@
 ### result
 
 Hopefully a map! Stay tuned!
+
+![pathomap](img/pathomap.png)

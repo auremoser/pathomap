@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Pathomap | CartoDB</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <link rel="shortcut icon" href="http://cartodb.com/assets/favicon.ico" />
+
+    <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css" />
+
+    <style type="text/css">
+      html, body, #map {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #cartocss {
+        position: absolute;
+        right: 20px;
+        top: 20px;
+      }
+      #sql {
+        position: absolute;
+        right: 292px;
+        top: 20px;
+      }
+      /*BUTTON STYLES*/
+      .layer_selector {
+        background: rgba(255,255,255,0.9);
+        border: 1px solid #999;
+        border-radius: 5px;
+        font-family: 'Unica One', sans-serif;
+        font-size: 13px;
+        padding: 0;
+        text-align: center;
+        width: 150px;
+      }
+      .layer_selector > p {
+        border-bottom: 1px solid #999;
+        padding: 5px 10px;
+        text-transform: uppercase;
+      }
+      .layer_selector ul {
+        padding: 0; margin: 0;
+        list-style-type: none;
+      }
+      .layer_selector li {
+        color: #444;
+        cursor: pointer;
+        padding: 10px 20px;
+      }
+      .layer_selector li:not(:last-child) {
+        border-bottom: 1px solid #999;
+      }
+      .layer_selector li:hover {
+        background-color: #a8ddb5;
+        cursor: pointer;
+      }
+      .layer_selector li.selected {
+        background-color: #7bccc4;
+      }
+</style>
+
+    <!-- SQL TEMPLATE -->
+    <script type='sql/text' id='sql'>
+      SELECT * FROM pathomap
+    </script>
+
+    <!-- CATEGORY FEATURE CSS -->
+    <style type='cartocss/text' id='cat-feature'>
+    /** category visualization */
+
+    #pathomap {
+       marker-fill-opacity: 0.9;
+       marker-line-color: #FFF;
+       marker-line-width: 1.5;
+       marker-line-opacity: 1;
+       marker-placement: point;
+       marker-type: ellipse;
+       marker-width: 10;
+       marker-allow-overlap: true;
+    }
+
+    #pathomap[env_feature_s=" airport"] {
+       marker-fill: #fb8072;
+    }
+    #pathomap[env_feature_s=" canal"] {
+       marker-fill: #fccde5;
+    }
+    #pathomap[env_feature_s=" ferry"] {
+       marker-fill: #fdb462;
+    }
+    #pathomap[env_feature_s=" fish gut"] {
+       marker-fill: #80b1d3;
+    }
+    #pathomap[env_feature_s=" not applicable"] {
+       marker-fill: #FB9A99;
+    }
+    #pathomap[env_feature_s=" park"] {
+       marker-fill: #b3de69;
+    }
+    #pathomap[env_feature_s=" subway"] {
+       marker-fill: #bebada;
+    }
+    </style>
+
+    <!-- CATEGORY BIOME CSS -->
+    <style type='cartocss/text' id='cat-biome'>
+    /** category visualization */
+
+    #pathomap {
+       marker-fill-opacity: 0.9;
+       marker-line-color: #FFF;
+       marker-line-width: 1.5;
+       marker-line-opacity: 1;
+       marker-placement: point;
+       marker-type: ellipse;
+       marker-width: 10;
+       marker-allow-overlap: true;
+    }
+
+    #pathomap[env_biome_s=" aquatic"] {
+       marker-fill: #80b1d3;
+    }
+    #pathomap[env_biome_s=" city"] {
+       marker-fill: #8dd3c7;
+    }
+    #pathomap[env_biome_s=" not applicable"] {
+       marker-fill: #FFCC00;
+    }
+    </style>
+
+  </head>
+  <body>
+    <div id="map"></div>
+    <!-- ADD BUTTONS -->
+    <div id="cartocss" class="layer_selector">
+        <p>Layers</p>
+        <ul>
+            <li data="cat-biome">Biome Type</li>
+            <li data="cat-feature">Feature</li>
+        </ul>
+    </div>
+
+    <!-- include cartodb.js library -->
+    <script src="http://libs.cartocdn.com/cartodb.js/v3/cartodb.js"></script>
+
+    <!-- place your code between the script tags below -->
+    <script src="js/main.js"></script>
+  </body>
+</html>

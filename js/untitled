@@ -1,0 +1,58 @@
+window.onload = function () {
+  // add your url ID here between viz/ and /viz.json or copy the visjson from your editor
+   var vizjson_url = 'https://team.cartodb.com/u/aureliamoser/api/v2/viz/6ea6819e-0895-11e5-85d2-0e018d66dc29/viz.json'; // <-- Paste viz.json URL between quotes
+
+   var options = {
+       sql: $("#sql").text(), // here you can set sql to run on your tables
+       cartocss: $("#simple").text() // here you can set css to style your vis
+   }
+   // clear sql of space and returns
+   options.sql = options.sql.replace(/(\r\n|\n|\r)/gm,'').trim();
+
+   var sublayers = [];
+
+   // instantiate map object from Leaflet
+   var mapObj = new L.Map(map, {  // <-- Replace map_id with your #id for rendering
+       center: [40.73, -73.99], // New York, NY
+       zoom: 7 // zoom projection to adjust starting point zoom
+   });
+
+   // CREATE LAYER SELECTOR - AKA BUTTONS
+   function createSelector(layer) {
+      var cartocss = "";
+      var $options = $(".layer_selector").find("li");
+      $options.click(function(e) {
+          var $li = $(e.target);
+          var selected = $li.attr('data');
+
+          $options.removeClass('selected');
+          $li.addClass('selected');
+
+          cartocss = $('#'+selected).text();
+
+          layer[0].setCartoCSS(cartocss);
+      });
+   }
+
+   // add basemap tiles
+   L.tileLayer('http://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png', {
+       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+   }).addTo(mapObj);
+
+   // add data tile layer
+   cartodb.createLayer(mapObj,vizjson_url)
+       .addTo(mapObj)
+       .done(function(layer) {
+           console.log("Map successfully created.");
+           sublayers[0] = layer.getSubLayer(0);
+           sublayers[1] = layer.getSubLayer(1);
+           sublayers[2] = layer.getSubLayer(2);
+           sublayers[3] = layer.getSubLayer(3);
+           sublayers[2].set(options); // altering the SQL and CartoCSS; see above
+           sublayers[0].hide(); // hiding the bubble layer
+           createSelector(sublayers);
+       })
+       .error(function(err) {
+           console.log("Map not created: " + err);
+       });
+}

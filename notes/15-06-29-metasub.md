@@ -16,3 +16,11 @@ Express:
 * metabolic pathways
 * geospatial relationships
 * time (4th dimension)
+
+Tools:
+* Graphlan - genome dendrogram maker
+
+File formats:
+* BAM
+* tabular format
+* bioinformatics -> requires massaging data

@@ -24,3 +24,5 @@ File formats:
 * BAM
 * tabular format
 * bioinformatics -> requires massaging data
+
+They made a [map](https://elizabeth-h.cartodb.com/viz/692199bc-161d-11e5-b2cd-0e5e07bb5d8a/public_map)!
